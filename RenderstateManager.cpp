@@ -144,7 +144,7 @@ HRESULT RSManager::redirectPresent(CONST RECT *pSourceRect, CONST RECT *pDestRec
 	
 	frameTimeManagement();
 	//if(Settings::get().getEnableTripleBuffering()) return ((IDirect3DDevice9Ex*)d3ddev)->PresentEx(NULL, NULL, NULL, NULL, D3DPRESENT_FORCEIMMEDIATE);
-	 return d3ddev->Present(pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);
+	return d3ddev->Present(pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);
 }
 
 D3DPRESENT_PARAMETERS RSManager::adjustPresentationParameters(const D3DPRESENT_PARAMETERS *pPresentationParameters) {
@@ -506,8 +506,8 @@ void RSManager::registerD3DXCreateTextureFromFileInMemory(LPCVOID pSrcData, UINT
 		IDirect3DSurface9* surf;
 		((IDirect3DTexture9*)pTexture)->GetSurfaceLevel(0, &surf);
 		char buffer[128];
-        sprintf_s(buffer, "dsfix/tex_dump/%08x.tga", hash);
-        D3DXSaveSurfaceToFile(GetDirectoryFile(buffer), D3DXIFF_TGA, surf, NULL, NULL);
+		sprintf_s(buffer, "dsfix/tex_dump/%08x.tga", hash);
+		D3DXSaveSurfaceToFile(GetDirectoryFile(buffer), D3DXIFF_TGA, surf, NULL, NULL);
 		surf->Release();
 	}
 	registerKnowTexture(pSrcData, SrcDataSize, pTexture);
@@ -761,20 +761,20 @@ HRESULT RSManager::redirectD3DXCreateTextureFromFileInMemoryEx(LPDIRECT3DDEVICE9
         }
         else
         {
-            char buffer[128];
-            sprintf_s(buffer, "dsfix/tex_override/%08x.png", hash);
+		char buffer[128];
+		sprintf_s(buffer, "dsfix/tex_override/%08x.png", hash);
             if (fileExists(buffer)) {
                 SDLOG(0, "Texture override (png)! hash: %08x\n", hash);
                 return D3DXCreateTextureFromFileEx(pDevice, buffer, D3DX_DEFAULT, D3DX_DEFAULT, MipLevels, Usage, D3DFMT_FROM_FILE, Pool, Filter, MipFilter, ColorKey, pSrcInfo, pPalette, ppTexture);
-            }
-            sprintf_s(buffer, "dsfix/tex_override/%08x.dds", hash);
+		}
+		sprintf_s(buffer, "dsfix/tex_override/%08x.dds", hash);
             if (fileExists(buffer)) {
                 SDLOG(0, "Texture override (dds)! hash: %08x\n", hash);
                 return D3DXCreateTextureFromFileEx(pDevice, buffer, D3DX_DEFAULT, D3DX_DEFAULT, MipLevels, Usage, D3DFMT_FROM_FILE, Pool, Filter, MipFilter, ColorKey, pSrcInfo, pPalette, ppTexture);
             }
-        }
+		}
 	}
-    return TrueD3DXCreateTextureFromFileInMemoryEx(pDevice, pSrcData, SrcDataSize, Width, Height, MipLevels, Usage, Format, Pool, Filter, MipFilter, ColorKey, pSrcInfo, pPalette, ppTexture);
+	return TrueD3DXCreateTextureFromFileInMemoryEx(pDevice, pSrcData, SrcDataSize, Width, Height, MipLevels, Usage, Format, Pool, Filter, MipFilter, ColorKey, pSrcInfo, pPalette, ppTexture);
 }
 
 void RSManager::storeRenderState() {
