@@ -37,7 +37,7 @@ bool WINAPI DllMain(HMODULE hDll, DWORD dwReason, PVOID pvReserved) {
 		ofile.open(GetDirectoryFile("DSfix.log"), std::ios::out);
 		sdlogtime();
 		SDLOG(0, "===== start DSfix %s = fn: %s\n", VERSION, fileName);
-		
+
 		// load settings
 		Settings::get().load();
 		Settings::get().report();
@@ -98,7 +98,7 @@ void __cdecl sdlogtime() {
 }
 
 void __cdecl sdlog(const char *fmt, ...) {
-	if(ofile != NULL) {
+	if(ofile.good()) {
 		if(!fmt) { return; }
 
 		va_list va_alist;
@@ -133,6 +133,5 @@ void errorExit(LPTSTR lpszFunction) {
 }
 
 bool fileExists(const char *filename) {
-  std::ifstream ifile(filename);
-  return NULL != ifile;
+    return std::ifstream(filename).good();
 }

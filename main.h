@@ -20,7 +20,7 @@
 
 #define VERSION "2.4"
 
-#define RELEASE_VER
+//#define RELEASE_VER
 
 #define WITHOUT_GFWL_LIB
 
